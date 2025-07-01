@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Transition Elephant</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Splash screen -->
+  <div id="splash-screen">
+    <img src="splash_elephant.png" alt="Splash Elephant">
+    <button id="start-button">Start</button>
+  </div>
+
+  <!-- Game container -->
+  <div id="game-container" style="display: none;">
+    <div id="puzzle-board">
+      <!-- Puzzle pieces with correct IDs -->
+      <img src="puzzle_piece_1.png" class="piece" id="piece1">
+      <img src="puzzle_piece_2.png" class="piece" id="piece2">
+      <img src="puzzle_piece_3.png" class="piece" id="piece3">
+      <img src="puzzle_piece_4.png" class="piece" id="piece4">
+      <img src="puzzle_piece_5.png" class="piece" id="piece5">
+      <img src="puzzle_piece_6.png" class="piece" id="piece6">
+    </div>
+
+    <!-- Pop-up modal (shown only after all pieces placed) -->
+    <div id="popup" class="hidden">
+      <p id="popup-text">Placeholder message</p>
+      <button onclick="closePopup()">OK</button>
+    </div>
+  </div>
+
+  <!-- Main JS logic -->
+  <script src="game.js"></script>
+</body>
+</html>
