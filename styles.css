@@ -15,9 +15,12 @@ body {
   align-items: center;
   justify-content: center;
 }
+/* Splash image */
 #splash-screen img {
-  width: 60%;
-  max-width: 400px;
+  width: 60%; /* Reduce image size */
+  max-width: 360px;
+  height: auto;
+  margin-bottom: 40px; /* Adds spacing before the button */
 }
 #start-button {
   margin-top: 20px;
