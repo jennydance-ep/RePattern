@@ -21,10 +21,11 @@ body {
 }
 /* Splash image */
 #splash-screen img {
-  width: 60%; /* Reduce image size */
-  max-width: 360px;
+  width: auto; 
+  max-width: 80%;
+  max-height: 40vh; /* image can only be 40% of screen height */
   height: auto;
-  margin-bottom: 40px; /* Adds spacing before the button */
+  margin-bottom: 30px; /* Adds spacing before the button */
 }
 /* Splash button */
 #start-button {
