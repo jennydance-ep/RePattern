@@ -54,7 +54,7 @@ body {
 /* Puzzle pieces */
 .piece {
   position: absolute;
-  width: 18vw;
+  width: 16vw;
   height: auto;
   touch-action: none;
   transition: transform 0.2s ease;
@@ -65,7 +65,7 @@ body {
 /* Target zones */
 .target {
   position: absolute;
-  width: 18vw;
+  width: 16vw;
   height: auto;
   border: 2px dashed #aaa;
   opacity: 0.4;
