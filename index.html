@@ -7,24 +7,22 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Splash Screen -->
   <div id="splash-screen">
     <img src="splash_elephant.png" alt="Splash Elephant" />
     <button id="start-button">Start</button>
   </div>
 
-  <!-- Game Container -->
-  <div id="game-container" style="display: none;">
+  <div id="game-container" style="display:none;">
     <div id="puzzle-board">
-      <!-- Snap Targets -->
-      <div class="target" id="target-piece1"></div>
-      <div class="target" id="target-piece2"></div>
-      <div class="target" id="target-piece3"></div>
-      <div class="target" id="target-piece4"></div>
-      <div class="target" id="target-piece5"></div>
-      <div class="target" id="target-piece6"></div>
+      <!-- Target zones -->
+      <div class="target" id="target1" style="top: 10%; left: 10%;"></div>
+      <div class="target" id="target2" style="top: 10%; left: 50%;"></div>
+      <div class="target" id="target3" style="top: 40%; left: 10%;"></div>
+      <div class="target" id="target4" style="top: 40%; left: 50%;"></div>
+      <div class="target" id="target5" style="top: 70%; left: 10%;"></div>
+      <div class="target" id="target6" style="top: 70%; left: 50%;"></div>
 
-      <!-- Puzzle Pieces -->
+      <!-- Puzzle pieces -->
       <img src="puzzle_piece_1.png" class="piece" id="piece1" />
       <img src="puzzle_piece_2.png" class="piece" id="piece2" />
       <img src="puzzle_piece_3.png" class="piece" id="piece3" />
@@ -33,14 +31,13 @@
       <img src="puzzle_piece_6.png" class="piece" id="piece6" />
     </div>
 
-    <!-- Pop-up Info -->
     <div id="popup" class="hidden">
       <p id="popup-text">Placeholder message</p>
       <button onclick="closePopup()">OK</button>
     </div>
   </div>
 
-  <!-- Script -->
   <script src="game.js"></script>
 </body>
 </html>
+
