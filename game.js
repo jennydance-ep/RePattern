@@ -1,4 +1,5 @@
 const pieces = document.querySelectorAll('.piece');
+const targets = document.querySelectorAll('.target');
 const popup = document.getElementById('popup');
 const popupText = document.getElementById('popup-text');
 const messages = [
@@ -9,110 +10,61 @@ const messages = [
   "Uncertainty: Explore, prototype, learn.",
   "Win-Win: Impact meets profitability."
 ];
-
 const locked = new Set();
-const correctPositions = {}; // Stores each piece’s correct spot
-const floatingIntervals = {}; // Store interval IDs for floating animation
 
+// Start game
 document.getElementById('start-button').onclick = () => {
   document.getElementById('splash-screen').style.display = 'none';
   document.getElementById('game-container').style.display = 'block';
-  setupPuzzle();
+  startGame();
 };
 
-function setupPuzzle() {
+function startGame() {
   pieces.forEach((piece, i) => {
-    const pieceId = piece.id;
+    // Random position
+    piece.style.left = Math.random() * 70 + '%';
+    piece.style.top = Math.random() * 60 + '%';
 
-    // Store correct position before randomizing
-    correctPositions[pieceId] = {
-      left: piece.offsetLeft,
-      top: piece.offsetTop
-    };
+    let offsetX, offsetY;
 
-    // Random starting position
-    const randLeft = Math.random() * 60;
-    const randTop = Math.random() * 60;
-    piece.style.left = randLeft + '%';
-    piece.style.top = randTop + '%';
+    piece.addEventListener('pointerdown', startDrag);
+    function startDrag(e) {
+      if (locked.has(piece.id)) return;
 
-    // Start floating animation
-    floatPiece(piece);
+      offsetX = e.clientX - piece.getBoundingClientRect().left;
+      offsetY = e.clientY - piece.getBoundingClientRect().top;
 
-    // Drag support
-    dragElement(piece);
-  });
-}
-
-function floatPiece(piece) {
-  const interval = setInterval(() => {
-    if (locked.has(piece.id)) return;
-    const deltaX = (Math.random() - 0.5) * 10;
-    const deltaY = (Math.random() - 0.5) * 10;
-
-    const currentLeft = parseFloat(piece.style.left);
-    const currentTop = parseFloat(piece.style.top);
-
-    piece.style.left = `${Math.min(80, Math.max(0, currentLeft + deltaX))}%`;
-    piece.style.top = `${Math.min(80, Math.max(0, currentTop + deltaY))}%`;
-  }, 800);
-  floatingIntervals[piece.id] = interval;
-}
-
-function dragElement(el) {
-  let offsetX, offsetY;
-
-  el.addEventListener('pointerdown', startDrag);
-
-  function startDrag(e) {
-    if (locked.has(el.id)) return;
-
-    e.preventDefault();
-    offsetX = e.clientX - el.getBoundingClientRect().left;
-    offsetY = e.clientY - el.getBoundingClientRect().top;
-
-    document.addEventListener('pointermove', drag);
-    document.addEventListener('pointerup', endDrag);
-  }
-
-  function drag(e) {
-    el.style.left = `${e.clientX - offsetX}px`;
-    el.style.top = `${e.clientY - offsetY}px`;
-  }
-
-  function endDrag(e) {
-    document.removeEventListener('pointermove', drag);
-    document.removeEventListener('pointerup', endDrag);
-    checkSnap(el);
-  }
-}
-
-function checkSnap(piece) {
-  const correct = correctPositions[piece.id];
-  const currentX = piece.offsetLeft;
-  const currentY = piece.offsetTop;
-
-  const dx = Math.abs(currentX - correct.left);
-  const dy = Math.abs(currentY - correct.top);
-  const snapThreshold = 40; // px
-
-  if (dx < snapThreshold && dy < snapThreshold) {
-    // Snap to correct spot
-    piece.style.left = `${correct.left}px`;
-    piece.style.top = `${correct.top}px`;
-
-    piece.style.border = "2px solid green";
-    locked.add(piece.id);
-
-    // Stop floating
-    clearInterval(floatingIntervals[piece.id]);
-
-    if (locked.size === 6) {
-      setTimeout(() => {
-        showPopup("Now you see the whole elephant. Transition needs everyone's perspective.");
-      }, 400);
+      piece.setPointerCapture(e.pointerId);
+      piece.addEventListener('pointermove', onDrag);
+      piece.addEventListener('pointerup', endDrag);
     }
-  }
+
+    function onDrag(e) {
+      const board = document.getElementById('puzzle-board').getBoundingClientRect();
+      piece.style.left = `${e.clientX - board.left - offsetX}px`;
+      piece.style.top = `${e.clientY - board.top - offsetY}px`;
+    }
+
+    function endDrag(e) {
+      piece.removeEventListener('pointermove', onDrag);
+      piece.removeEventListener('pointerup', endDrag);
+
+      const pieceBox = piece.getBoundingClientRect();
+      const targetBox = targets[i].getBoundingClientRect();
+      const distance = Math.hypot(
+        pieceBox.left - targetBox.left,
+        pieceBox.top - targetBox.top
+      );
+
+      if (distance < 50) {
+        // Snap into place
+        piece.style.left = targets[i].style.left;
+        piece.style.top = targets[i].style.top;
+        locked.add(piece.id);
+        showPopup(messages[i]);
+      }
+    }
+  });
 }
 
 function showPopup(msg) {
@@ -122,4 +74,9 @@ function showPopup(msg) {
 
 function closePopup() {
   popup.classList.add('hidden');
+  if (locked.size === 6) {
+    setTimeout(() => {
+      showPopup("Now you see the whole elephant. Transition needs everyone's perspective.");
+    }, 500);
+  }
 }
