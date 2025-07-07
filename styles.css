@@ -50,10 +50,10 @@ body {
 /* Puzzle pieces */
 .piece {
   position: absolute;
-  width: 18vw;
-  max-width: 70px;
+  width: 22vw;          /* Scale up piece size */
+  max-width: 120px;     /* Still fits on mobile */
   height: auto;
-  max-height: 70px;
+  max-height: 120px;
   touch-action: none;
   transition: transform 0.2s ease;
   z-index: 10;
@@ -62,10 +62,10 @@ body {
 /* Snap targets */
 .target {
   position: absolute;
-  width: 18vw;
-  max-width: 70px;
+  width: 22vw;
+  max-width: 120px;
   height: auto;
-  max-height: 70px;
+  max-height: 120px;
   border: 2px dashed #888;
   opacity: 0.4;
   z-index: 1;
