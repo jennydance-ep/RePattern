@@ -75,13 +75,14 @@ body {
   display: block;
 }
 
-/* Snap area positioning (adjust these if needed) */
-#target1 { top: 10%; left: 10%; }
-#target2 { top: 10%; left: 40%; }
-#target3 { top: 10%; left: 70%; }
-#target4 { top: 50%; left: 10%; }
-#target5 { top: 50%; left: 40%; }
-#target6 { top: 50%; left: 70%; }
+/* Snap target grid: 3 columns × 2 rows, tightly packed */
+#target1 { top: 50%; left: 50%; transform: translate(-180px, -130px); }
+#target2 { top: 50%; left: 50%; transform: translate(-60px, -130px); }
+#target3 { top: 50%; left: 50%; transform: translate(60px, -130px); }
+
+#target4 { top: 50%; left: 50%; transform: translate(-180px, 0px); }
+#target5 { top: 50%; left: 50%; transform: translate(-60px, 0px); }
+#target6 { top: 50%; left: 50%; transform: translate(60px, 0px); }
 
 /* Popup */
 #popup {
@@ -98,3 +99,4 @@ body {
 .hidden {
   display: none;
 }
+
