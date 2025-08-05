@@ -75,10 +75,10 @@ body {
   display: block;
 }
 
-/* Snap target grid: 3 columns × 2 rows, tightly packed */
-#target1 { top: 50%; left: 50%; transform: translate(-180px, -130px); }
-#target2 { top: 50%; left: 50%; transform: translate(-60px, -130px); }
-#target3 { top: 50%; left: 50%; transform: translate(60px, -130px); }
+/* Snap target grid: 3x2 layout, fully joined (no gaps) */
+#target1 { top: 50%; left: 50%; transform: translate(-180px, -120px); }
+#target2 { top: 50%; left: 50%; transform: translate(-60px, -120px); }
+#target3 { top: 50%; left: 50%; transform: translate(60px, -120px); }
 
 #target4 { top: 50%; left: 50%; transform: translate(-180px, 0px); }
 #target5 { top: 50%; left: 50%; transform: translate(-60px, 0px); }
@@ -99,4 +99,5 @@ body {
 .hidden {
   display: none;
 }
+
 
