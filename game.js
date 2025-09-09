@@ -46,25 +46,26 @@ function startGame() {
     }
 
     function endDrag(e) {
-      piece.removeEventListener('pointermove', onDrag);
-      piece.removeEventListener('pointerup', endDrag);
+  piece.removeEventListener('pointermove', onDrag);
+  piece.removeEventListener('pointerup', endDrag);
 
-      const pieceBox = piece.getBoundingClientRect();
-      const targetBox = targets[i].getBoundingClientRect();
-      const distance = Math.hypot(
-        pieceBox.left - targetBox.left,
-        pieceBox.top - targetBox.top
-      );
+  const board = document.getElementById('puzzle-board').getBoundingClientRect();
+  const pieceBox = piece.getBoundingClientRect();
+  const targetBox = targets[i].getBoundingClientRect();
 
-      if (distance < 50) {
-        // Snap into place
-        piece.style.left = targets[i].style.left;
-        piece.style.top = targets[i].style.top;
-        locked.add(piece.id);
-        showPopup(messages[i]);
-      }
-    }
-  });
+  const distance = Math.hypot(
+    pieceBox.left - targetBox.left,
+    pieceBox.top - targetBox.top
+  );
+
+  if (distance < 50) {
+    // Snap into place at target coordinates (relative to puzzle board)
+    piece.style.left = `${targetBox.left - board.left}px`;
+    piece.style.top = `${targetBox.top - board.top}px`;
+
+    locked.add(piece.id);
+    showPopup(messages[i]);
+  }
 }
 
 function showPopup(msg) {
@@ -80,3 +81,4 @@ function closePopup() {
     }, 500);
   }
 }
+
