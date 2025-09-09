@@ -28,6 +28,7 @@ function startGame() {
     let offsetX, offsetY;
 
     piece.addEventListener('pointerdown', startDrag);
+
     function startDrag(e) {
       if (locked.has(piece.id)) return;
 
@@ -46,27 +47,29 @@ function startGame() {
     }
 
     function endDrag(e) {
-  piece.removeEventListener('pointermove', onDrag);
-  piece.removeEventListener('pointerup', endDrag);
+      piece.removeEventListener('pointermove', onDrag);
+      piece.removeEventListener('pointerup', endDrag);
 
-  const board = document.getElementById('puzzle-board').getBoundingClientRect();
-  const pieceBox = piece.getBoundingClientRect();
-  const targetBox = targets[i].getBoundingClientRect();
+      const board = document.getElementById('puzzle-board').getBoundingClientRect();
+      const pieceBox = piece.getBoundingClientRect();
+      const targetBox = targets[i].getBoundingClientRect();
 
-  const distance = Math.hypot(
-    pieceBox.left - targetBox.left,
-    pieceBox.top - targetBox.top
-  );
+      const distance = Math.hypot(
+        pieceBox.left - targetBox.left,
+        pieceBox.top - targetBox.top
+      );
 
-  if (distance < 50) {
-    // Snap into place at target coordinates (relative to puzzle board)
-    piece.style.left = `${targetBox.left - board.left}px`;
-    piece.style.top = `${targetBox.top - board.top}px`;
+      if (distance < 50) {
+        // Snap into place at target coordinates (relative to puzzle board)
+        piece.style.left = `${targetBox.left - board.left}px`;
+        piece.style.top = `${targetBox.top - board.top}px`;
 
-    locked.add(piece.id);
-    showPopup(messages[i]);
-  }
-}
+        locked.add(piece.id);
+        showPopup(messages[i]);
+      }
+    }
+  }); // closes pieces.forEach
+} // closes startGame
 
 function showPopup(msg) {
   popupText.innerText = msg;
