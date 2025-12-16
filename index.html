@@ -4,14 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>The Transition Elephant</title>
-<link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
+  <!-- Splash screen -->
   <div id="splash-screen">
     <img src="splash_elephant.png" alt="Splash Elephant">
     <button id="start-button">Start</button>
   </div>
 
+  <!-- Game container -->
   <div id="game-container" style="display:none;">
     <div id="puzzle-board">
       <!-- Target positions -->
@@ -23,21 +25,33 @@
       <div class="target" id="target6"></div>
 
       <!-- Puzzle pieces -->
-      <img src="puzzle_piece_1.png" class="piece" id="piece1">
-      <img src="puzzle_piece_2.png" class="piece" id="piece2">
-      <img src="puzzle_piece_3.png" class="piece" id="piece3">
-      <img src="puzzle_piece_4.png" class="piece" id="piece4">
-      <img src="puzzle_piece_5.png" class="piece" id="piece5">
-      <img src="puzzle_piece_6.png" class="piece" id="piece6">
+      <img src="puzzle_piece_1.png" class="piece" id="piece1" alt="Puzzle piece 1">
+      <img src="puzzle_piece_2.png" class="piece" id="piece2" alt="Puzzle piece 2">
+      <img src="puzzle_piece_3.png" class="piece" id="piece3" alt="Puzzle piece 3">
+      <img src="puzzle_piece_4.png" class="piece" id="piece4" alt="Puzzle piece 4">
+      <img src="puzzle_piece_5.png" class="piece" id="piece5" alt="Puzzle piece 5">
+      <img src="puzzle_piece_6.png" class="piece" id="piece6" alt="Puzzle piece 6">
     </div>
 
+    <!-- Popup -->
     <div id="popup" class="hidden">
       <p id="popup-text">Placeholder message</p>
-      <button onclick="closePopup()">OK</button>
+      <button id="popup-ok">OK</button>
     </div>
+
+    <!-- Confetti overlay canvas -->
+    <canvas id="confetti"></canvas>
   </div>
 
-  <script src="game.js"></script>
+  <!-- Audio elements -->
+  <audio id="snap-sound" src="sounds/snap.mp3" preload="auto"></audio>
+  <audio id="popup-sound" src="sounds/popup.mp3" preload="auto"></audio>
+  <audio id="bg-music" src="sounds/background.mp3" preload="auto" loop></audio>
+
+  <!-- Confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Game logic -->
+  <script src="game.js?v=6"></script>
 </body>
 </html>
-
