@@ -1,3 +1,4 @@
+/* Base layout */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -8,10 +9,7 @@ body {
 /* Splash screen */
 #splash-screen {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: #c6e7d9;
   display: flex;
   flex-direction: column;
@@ -19,12 +17,21 @@ body {
   justify-content: center;
   z-index: 9999;
 }
+
 #splash-screen img {
   width: 50%;
   max-width: 240px;
   height: auto;
   margin-bottom: 20px;
 }
+
+/* Start button with pulse */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
 #start-button {
   padding: 12px 24px;
   font-size: 16px;
@@ -32,6 +39,8 @@ body {
   color: white;
   border: none;
   border-radius: 8px;
+  animation: pulse 2s infinite;
+  cursor: pointer;
 }
 
 /* Game area */
@@ -40,6 +49,7 @@ body {
   height: 100vh;
   position: relative;
 }
+
 #puzzle-board {
   width: 100%;
   height: 100%;
@@ -47,7 +57,7 @@ body {
   overflow: hidden;
 }
 
-/* Puzzle pieces */
+/* Puzzle pieces and targets */
 .piece,
 .target {
   position: absolute;
@@ -57,8 +67,17 @@ body {
   max-height: 120px;
   box-sizing: border-box;
   touch-action: none;
-  transition: transform 0.2s ease;
   z-index: 10;
+}
+
+/* Smooth piece snap and hover lift */
+.piece {
+  transition: left 0.3s ease, top 0.3s ease, transform 0.2s ease;
+}
+
+.piece:hover {
+  transform: scale(1.05);
+  cursor: grab;
 }
 
 .target {
@@ -67,15 +86,7 @@ body {
   z-index: 1;
 }
 
-/* Image inside puzzle piece */
-.piece img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-/* Snap target grid: 3x2 layout, fully joined (no gaps) */
+/* Snap target grid: 3x2 layout */
 #target1 { top: 50%; left: 50%; transform: translate(-180px, -120px); }
 #target2 { top: 50%; left: 50%; transform: translate(-60px, -120px); }
 #target3 { top: 50%; left: 50%; transform: translate(60px, -120px); }
@@ -84,7 +95,7 @@ body {
 #target5 { top: 50%; left: 50%; transform: translate(-60px, 0px); }
 #target6 { top: 50%; left: 50%; transform: translate(60px, 0px); }
 
-/* Popup */
+/* Popup with fade/scale */
 #popup {
   position: absolute;
   bottom: 20%;
@@ -95,9 +106,47 @@ body {
   border: 2px solid #004d40;
   border-radius: 10px;
   text-align: center;
-}
-.hidden {
-  display: none;
+
+  /* animation states */
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none; /* prevent clicks when hidden */
 }
 
+/* Visible popup (toggle via removing .hidden) */
+#popup:not(.hidden) {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* Final popup glow */
+@keyframes glow {
+  0% { box-shadow: 0 0 5px #004d40; }
+  50% { box-shadow: 0 0 20px #00bfa5; }
+  100% { box-shadow: 0 0 5px #004d40; }
+}
+
+#popup.final {
+  animation: glow 2s infinite;
+}
+
+/* Replace hard display:none to enable animation-driven visibility */
+.hidden {
+  /* intentionally not using display:none to allow transitions */
+  opacity: 0;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+/* Confetti canvas overlay */
+#confetti {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999; /* below splash but above game elements */
+}
 
